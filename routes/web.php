@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use NunoMaduro\Collision\Adapters\Phpunit\TestResult;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,27 +12,26 @@ use NunoMaduro\Collision\Adapters\Phpunit\TestResult;
 | contains the "web" middleware group. Now create something great!
 |
 */
+/*
+Route::get('/', function () {
+    return 'Olá, seja bem vindo ao curso!';
+});
+*/
 
-
-
-Route::get('/', [\App\Http\Controllers\PrincipalController::class, 'principal'])->name('site.index');
-
-Route::get('/sobre-nos', [\App\Http\Controllers\SobreNosController::class, 'sobreNos'])->name('site.sobre-nos');
-
-Route::get('/contato', [\App\Http\Controllers\ContatoController::class, 'contato'])->name('site.contato');
-
-
-Route::get('/login', function () {return 'Login';});
+Route::get('/', 'PrincipalController@principal')->name('site.index');
+Route::get('/sobre-nos', 'SobreNosController@sobreNos')->name('site.sobrenos');
+Route::get('/contato', 'ContatoController@contato')->name('site.contato');
+Route::post('/contato', 'ContatoController@contato')->name('site.contato');
+Route::get('/login', function(){return 'Login';})->name('site.login');
 
 Route::prefix('/app')->group(function() {
-    Route::get('/clientes', function () {return 'clientes';});
-    Route::get('/fornecedores',  [\App\Http\Controllers\FornecedorController::class, 'index'])->name('app.fornecedores');
-    Route::get('/produtos', function () {return 'produtos';});
-    
+    Route::get('/clientes', function(){return 'Clientes';})->name('app.clientes');
+    Route::get('/fornecedores', 'FornecedorController@index')->name('app.fornecedores');
+    Route::get('/produtos', function(){return 'produtos';})->name('app.produtos');
 });
 
-Route::get('/teste/{p1}/{p2}',  [\App\Http\Controllers\TesteController::class, 'teste'])->name('teste');
+Route::get('/teste/{p1}/{p2}', 'TesteController@teste')->name('site.teste');
 
-Route::fallback(function () {
-    echo '<h1>A Rota requisitada não existe. <a href="'.route('site.index') . '">Clique Aqui</h1></a>';
+Route::fallback(function() {
+    echo 'A rota acessada não existe. <a href="'.route('site.index').'">clique aqui</a> para ir para página inicial';
 });
