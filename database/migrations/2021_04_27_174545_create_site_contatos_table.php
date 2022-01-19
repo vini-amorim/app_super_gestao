@@ -11,6 +11,7 @@ class CreateSiteContatosTable extends Migration
      *
      * @return void
      */
+    
     public function up()
     {
         Schema::create('site_contatos', function (Blueprint $table) {
