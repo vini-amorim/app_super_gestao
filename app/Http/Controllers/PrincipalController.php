@@ -11,7 +11,6 @@ class PrincipalController extends Controller
 
         $motivo_contatos = MotivoContato::all();
 
-
         return view('site.principal', ['motivo_contatos' => $motivo_contatos]);
     }
 }
