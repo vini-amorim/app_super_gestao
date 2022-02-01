@@ -12,19 +12,20 @@ class AutenticacaoMiddleware
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     * 
      * @return mixed
      */
     public function handle($request, Closure $next, $metodo_autenticacao, $visitante)
     {
+        session_start();
 
-        if ($metodo_autenticacao == 'padrao' ) {
-            echo 'Usuario ' .$visitante.' Não permitido<br>';
-        }
-        
-        if (false) {
+        if(isset($_SESSION['email']) && $_SESSION['email'] != '') {
             return $next($request);
         } else {
-            return Response('Acesso negado! ROta exite autenticação.');
+            return redirect()->route('site.login', ['erro' => 2]);
         }
     }
 }
+
+
+
