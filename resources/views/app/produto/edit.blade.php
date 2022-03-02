@@ -1,52 +1,30 @@
 @extends('app.layouts.basico')
 
-@section('titulo', 'Editar Produtos')
+@section('titulo', 'Produto')
 
 @section('conteudo')
+    
+    <div class="conteudo-pagina">
 
-<div class="conteudo-pagina">
+        <div class="titulo-pagina-2">
+            <p>Editar Produto</p>
+        </div>
 
-  <div class="titulo-pagina-2">
-    <h1>Editar de Produtos</h1>
-  </div>
-  <br>
-  <br>
-  <div class="menu">
-    <ul>
-      <li><a href="{{ route('produto.index') }}">Voltar</a></li>
-      <li><a href="{{ route ('produto.index') }}">Produtos Cadastrados</a></li>
-    </ul>
-  </div>
-  <br>
-  <div class="informacao-pagina">
-    <div style="width: 30%; margin-left: auto; margin-right: auto;">
-        <form method="post" action="{{ route('produto.update', ['produto' => $produto->id]) }}">
-            @csrf
-            @method('PUT')
-            <input type="text" name="nome" value="{{ $produto->nome ?? old('nome') }}" placeholder="Nome" class="borda-preta">
-            {{ $errors->has('nome') ? $errors->first('nome') : '' }}
+        <div class="menu">
+            <ul>
+                <li><a href="{{ route('produto.index') }}">Voltar</a></li>
+                <li><a href="">Consulta</a></li>
+            </ul>
+        </div>
 
-            <input type="text" name="descricao" value="{{ $produto->descricao ?? old('descricao') }}" placeholder="Descrição" class="borda-preta">
-            {{ $errors->has('descricao') ? $errors->first('descricao') : '' }}
+        <div class="informacao-pagina">
+            <div style="width: 30%; margin-left: auto; margin-right: auto;">
+                @component('app.produto._components.form_create_edit', ['produto' => $produto, 'unidades' => $unidades, 'fornecedores' => $fornecedores])
+                @endcomponent
+            </div>
+        </div>
 
-            <input type="text" name="peso" value="{{ $produto->peso ?? old('peso') }}" placeholder="peso" class="borda-preta">
-            {{ $errors->has('peso') ? $errors->first('peso') : '' }}
-
-            <select name="unidade_id">
-                <option>-- Selecione a Unidade de Medida --</option>
-
-                @foreach ($unidades as $unidade)
-                    <option value="{{ $unidade->id }}" {{ ( $produto->unidade_id ?? old('unidade_id') ) == $unidade->id ? 'selected' : '' }} >{{ $unidade->descricao }}</option>
-                @endforeach
-            </select>
-            {{ $errors->has('unidade_id') ? $errors->first('unidade_id') : '' }}
-
-            <button type="submit" class="borda-preta">Cadastrar</button>
-        </form>
     </div>
-</div>
-  
-
-</div>
 
 @endsection
+
